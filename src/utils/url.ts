@@ -77,7 +77,7 @@ const blacklistKeys = [
  * remove tracking/utm params from url
  * @todo purify url based on domain
  */
-export const purify = (url) => {
+export const purify = (url: any) => {
   try {
     const pureUrl = new URL(url)
 
@@ -92,7 +92,7 @@ export const purify = (url) => {
 }
 
 
-export const getDomain = (url) => {
+export const getDomain = (url: string) => {
   const host = (new URL(url)).host
   return host.replace('www.', '')
 }

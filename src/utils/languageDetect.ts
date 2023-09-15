@@ -13,7 +13,7 @@ export async function languageDectect(content: string) {
   const result = await client.analyze("LanguageDetection", [content]);
   const doc = result[0]
 
-  if ('primaryLanguage' in doc) {
+  if (doc && 'primaryLanguage' in doc) {
     // console.log(
     //   `Primary language: ${doc.primaryLanguage.name} (iso6391 name: ${doc.primaryLanguage.iso6391Name})`
     // );
@@ -22,7 +22,7 @@ export async function languageDectect(content: string) {
   } else {
     // Handle error or do something else
     let error = 'Can not detect language'
-    if (doc.error) error += doc.error
+    if (doc && doc.error) error += doc.error
 
     throw new Error(error);
   }
