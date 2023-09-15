@@ -28,7 +28,7 @@ export async function archive(url: string, fetchOptions: RetrieveOptions = {}) {
 
 }
 
-export async function extract(url, content) {
+export async function extract(url: string, content: string) {
 
   if (/mp.weixin.qq.com/.test(url)) {
     return await weixin(url, content)
@@ -37,6 +37,10 @@ export async function extract(url, content) {
   const doc = new JSDOM(content)
   let reader = new Readability(doc.window.document)
   let article = reader.parse()
+
+  if (!article) {
+    return null
+  }
   // console.log(article.content)
   // console.log(article.textContent, article.title, article.length)
   return await gpt(url, article.title + "\n\n" + article.textContent)
