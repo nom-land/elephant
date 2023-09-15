@@ -1,4 +1,5 @@
 /* eslint-env jest */
+import { describe, expect, test } from '@jest/globals'
 import {
   isValidUrl,
   purify as purifyUrl,

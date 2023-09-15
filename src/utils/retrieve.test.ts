@@ -1,8 +1,9 @@
 /* eslint-env jest */
+import { describe, expect, test } from '@jest/globals'
 import nock from 'nock'
 import retrieve from './retrieve'
 
-const parseUrl = (url) => {
+const parseUrl = (url: string) => {
   const re = new URL(url)
   return {
     baseUrl: `${re.protocol}//${re.host}`,

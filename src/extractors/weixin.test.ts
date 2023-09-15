@@ -1,3 +1,4 @@
+import { describe, expect, test } from '@jest/globals'
 import weixin from './weixin'
 
 describe('test weixin()', () => {
@@ -28,8 +29,8 @@ describe('test weixin()', () => {
       },
     }]
 
-    cases.forEach(({ url, content, expected }) => {
-      const result = weixin(url, content)
+    cases.forEach(async ({ url, content, expected }) => {
+      const result = await weixin(url, content)
       expect(result).toEqual(expected)
     })
   })
