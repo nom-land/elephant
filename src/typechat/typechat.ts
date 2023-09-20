@@ -91,7 +91,7 @@ export function createJsonTranslator<T extends object>(model: TypeChatLanguageMo
             `The following is a user request:\n` +
             `"""\n${request}\n"""\n` +
             (guidelines ? `Guidelines:\n${guidelines}\n` : '') +
-            `The following is the user request translated into a JSON object with 2 spaces of indentation and no properties with the value undefined:\n`;
+            `The following is the user request translated into a JSON object with 2 spaces of indentation and no properties with the value null:\n`;
     }
 
     function createRepairPrompt(validationError: string) {

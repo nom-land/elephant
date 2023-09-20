@@ -1,5 +1,5 @@
 {
-  "name": "@star8ks/elephant",
+  "name": "@nomland/elephant",
   "version": "0.0.1",
   "description": "",
   "main": "dist/index.js",
@@ -8,7 +8,7 @@
     "/dist"
   ],
   "scripts": {
-    "start": "ts-node index.ts",
+    "start": "ts-node examples.ts",
     "test": "npm run build && jest",
     "copy-dts": "copyfiles -u 1 \"src/types/*.d.ts\" dist",
     "build": "tsc && npm run copy-dts"
@@ -28,6 +28,7 @@
   "dependencies": {
     "@azure/ai-language-text": "^1.1.0",
     "@mozilla/readability": "^0.4.4",
+    "axios": "^1.5.0",
     "cross-fetch": "^4.0.0",
     "dotenv": "^16.3.1",
     "jsdom": "^22.1.0"

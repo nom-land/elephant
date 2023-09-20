@@ -24,9 +24,9 @@ lang: ${webpage.lang}
 website name: ${webpage.siteName}
 
 ${webpage.content}`
-  const guidelines = ``
 
-  const response = await translator.translate(content, guidelines)
+  // TODO add guidelines to prompt
+  const response = await translator.translate(content)
 
   if (!response.success) {
     // TODO retry if respons.message == 'JSON validation failed'
@@ -35,8 +35,6 @@ ${webpage.content}`
 
     return null
   }
-
-  console.log(response.data)
 
   // if (response.data.type === 'post') {
   //   const translator = createJsonTranslator<PostMetaData>(model, schema, "PostMetaData")

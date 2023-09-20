@@ -8,7 +8,7 @@ import { JSDOM } from 'jsdom'
 import weixin from './extractors/weixin'
 import gpt from './extractors/gpt'
 
-export async function archive(url: string, fetchOptions: RetrieveOptions = {}) {
+export async function fetch(url: string, fetchOptions: RetrieveOptions = {}) {
   if (!isString(url)) {
     throw new Error('Input must be a string')
   }
@@ -17,32 +17,55 @@ export async function archive(url: string, fetchOptions: RetrieveOptions = {}) {
     return null
   }
 
-  const html = await retrieve(url, fetchOptions)
+  return await retrieve(url, fetchOptions)
+}
+
+export async function extract(url: string) {
+  const html = await fetch(url)
   if (!html) {
     return null
   }
 
-  const entry = await extract(url, html)
-
-  console.log(entry)
-
-}
-
-export async function extract(url: string, content: string) {
-
   if (/mp.weixin.qq.com/.test(url)) {
-    return await weixin(url, content)
+    return await weixin(url, html)
   }
 
-  const doc = new JSDOM(content)
-  let reader = new Readability(doc.window.document)
+  const dom = new JSDOM(html)
+  let reader = new Readability(dom.window.document)
   let webpage = reader.parse()
-
   if (!webpage) {
     return null
   }
-  console.log(webpage.content, webpage.siteName, webpage.dir, webpage.excerpt)
-  return
-  // console.log(webpage.textContent, webpage.title, webpage.length)
+
+  let metaTags = dom.window.document.querySelectorAll('meta')
+  let metaString = Array.from(metaTags).reduce((acc, metaTag) => {
+    return acc + metaTag.outerHTML + '\n';
+  }, '')
+  webpage.content = metaString + webpage.content
+
+  const additionalContent = applyRules(url, dom)
+  webpage.content += additionalContent
+
   return await gpt(url, webpage)
+}
+
+// apply domain/url pattern specific rules defined in rules.ts
+// e.g. add ld+json to webpage.content for douban.com
+function applyRules(url: string, dom: JSDOM): string {
+  const rules = [
+    {urlPattern: '.*\.douban\.com', querySelector: '.subject'}
+  ];
+
+  for (const rule of rules) {
+    if (!new RegExp(rule.urlPattern).test(url)) continue
+
+    const elements = dom.window.document.querySelectorAll(rule.querySelector)
+    if (elements.length) {
+      return Array.from(elements).reduce((acc, el) => {
+        return acc + el.textContent + '\n';
+      }, '').replaceAll(/[\n\s]+/g, '\n')
+    }
+  }
+
+  return ''
 }
