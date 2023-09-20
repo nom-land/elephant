@@ -9,8 +9,9 @@
   ],
   "scripts": {
     "start": "ts-node index.ts",
-    "test": "jest",
-    "build": "tsc"
+    "test": "npm run build && jest",
+    "copy-dts": "copyfiles -u 1 \"src/types/*.d.ts\" dist",
+    "build": "tsc && npm run copy-dts"
   },
   "author": "",
   "license": "ISC",
@@ -29,7 +30,6 @@
     "@mozilla/readability": "^0.4.4",
     "cross-fetch": "^4.0.0",
     "dotenv": "^16.3.1",
-    "jsdom": "^22.1.0",
-    "typechat": "^0.0.10"
+    "jsdom": "^22.1.0"
   }
 }
