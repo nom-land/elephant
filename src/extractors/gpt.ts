@@ -1,23 +1,58 @@
 import fs from "fs"
 import path from "path"
 import dotenv from "dotenv"
-import { createLanguageModel, createJsonTranslator } from "typechat"
-import { type PostMetaData } from '../types/index'
+import { createLanguageModel, createJsonTranslator } from "../typechat"
+import type { Entry, PostMetaData } from '../types/index'
+import { type Readability } from '@mozilla/readability'
 
 dotenv.config();
 
+export default async function gpt(url: string, webpage: ReturnType<Readability['parse']>): Promise<Entry|null> {
+  if(!webpage) return null
 
-export default async function gpt(url: string, content: string): Promise<PostMetaData|null> {
   const model = createLanguageModel(process.env)
   const schema = fs.readFileSync(path.join(__dirname, "../types/index.d.ts"), "utf8")
-  const translator = createJsonTranslator<PostMetaData>(model, schema, "PostMetaData")
+  const translator = createJsonTranslator<Entry>(model, schema, "Entry")
 
-  const response = await translator.translate(url + '\n' + content)
+  // const shortContent = `${url}
+  // title: ${webpage.title}
+  // description: ${webpage.excerpt}`
+
+  const content = `webpage url: ${url}
+webpage title: ${webpage.title}
+lang: ${webpage.lang}
+website name: ${webpage.siteName}
+
+${webpage.content}`
+  const guidelines = ``
+
+  const response = await translator.translate(content, guidelines)
+
   if (!response.success) {
+    // TODO retry if respons.message == 'JSON validation failed'
     console.error('GPT extract failed:')
     console.error(response)
+
     return null
   }
+
+  console.log(response.data)
+
+  // if (response.data.type === 'post') {
+  //   const translator = createJsonTranslator<PostMetaData>(model, schema, "PostMetaData")
+  
+  //   const metaDataResponse = await translator.translate(url + '\n' + content)
+
+  //   if (!metaDataResponse.success) {
+  //     // TODO retry if respons.message == 'JSON validation failed'
+  //     console.error('GPT extract metaData failed:')
+  //     console.error(metaDataResponse)
+
+  //     return null
+  //   }
+  //   console.log(metaDataResponse.data)
+  //   response.data.metaData = metaDataResponse.data
+  // }
 
   return response.data
 }

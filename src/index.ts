@@ -36,12 +36,13 @@ export async function extract(url: string, content: string) {
 
   const doc = new JSDOM(content)
   let reader = new Readability(doc.window.document)
-  let article = reader.parse()
+  let webpage = reader.parse()
 
-  if (!article) {
+  if (!webpage) {
     return null
   }
-  // console.log(article.content)
-  // console.log(article.textContent, article.title, article.length)
-  return await gpt(url, article.title + "\n\n" + article.textContent)
+  console.log(webpage.content, webpage.siteName, webpage.dir, webpage.excerpt)
+  return
+  // console.log(webpage.textContent, webpage.title, webpage.length)
+  return await gpt(url, webpage)
 }
