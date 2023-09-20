@@ -1,21 +1,6 @@
-import { type PostMetaData } from '../types'
+import { type PostMetaData } from '../types/index'
 import { languageDectect } from '../utils/languageDetect'
-
-function match(regex: RegExp, content: string) {
-  const meta = content.match(regex)
-  if (meta && meta[1]) {
-    return meta[1].trim()
-  }
-  return ''
-}
-
-function matchMetaName(metaName: string, content: string) {
-  return match(new RegExp(`<meta name=\"${metaName}\" content=\"(.*?)\"`, 's'), content)
-}
-
-function matchProperty(metaName: string, content: string) {
-  return match(new RegExp(`<meta property=\"${metaName}\" content=\"(.*?)\"`, 's'), content)
-}
+import { matchMetaName, match, matchProperty } from '../utils/match'
 
 function extractAuthor(content: string) {
   const metaAuthor = matchMetaName('author', content)
@@ -56,6 +41,6 @@ export default async function weixin(url: string, content: string): Promise<Post
     type: 'post',
     language,
     url,
-    lastModified,
+    lastModified
   }
 }

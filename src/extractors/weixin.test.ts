@@ -14,18 +14,26 @@ describe('test weixin()', () => {
       <meta property="og:type" content="article">
       <meta property="og:article:author" content="微信团队">
       <title>小程序手势 打开半屏新姿势</title>
-    </head><body><em id="publish_time" class="rich_media_meta rich_media_meta_text">2023-03-02 17:30</em></body>`,
+    </head><body><script type="text/javascript" nonce="1948247601" reportloaderror>var __INLINE_SCRIPT__ = (function () {
+      'use strict';
+      if (!window.__second_open__) {
+        var svrDate = '1695238845';
+        var oriCreateTime = '1677749458';
+        var createTime = '2023-03-02 17:30';
+        __setPubTime(svrDate, oriCreateTime, createTime, document.getElementById('publish_time'));
+        window.__setPubTime = __setPubTime;
+      }
+    
+      return __setPubTime;
+    
+    })();</script></body>`,
       expected: {
         type: 'post',
         title: '小程序手势 打开半屏新姿势',
         authors: ['微信团队'],
-        language: 'zh-CN',
+        language: 'zh_chs',
         url: 'https://mp.weixin.qq.com/s/WCtsn7qsmwJQE27luF7xJA',
-        lastModified: '2023-03-02 17:30',
-        translator: null,
-        originalTitle: null,
-        originalUrl: null,
-        originalLanguage: null
+        lastModified: '2023-03-02 17:30'
       },
     }]
 
