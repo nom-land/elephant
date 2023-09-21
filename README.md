@@ -16,7 +16,7 @@ To use an Azure OpenAI endpoint, visit the [Typechat documentation](https://micr
 ## Usage
 
 ```
-import {extract} from nom-land/elephant
+import {extract} from elephant-sdk
 
 await extract('https://test.com/example-page')
 ```
