@@ -6,7 +6,11 @@ export interface Entry {
   platform: 'mp.weixin' | 'Mirror' | 'Medium' | 'Matters' | 'Personal Blog' | 'Other' | 'douban'
   IPFSUrl: string
   name: string
-  type: 'post' /* any content like a blog post, a tweet post, an article... */ | 'book' /* book */ | 'video' /* video */ | 'podcast' /* podcast */ | 'paper'
+  type: 'post' /* Default type. Any content like a blog post, a tweet post, an article... */
+    | 'book' /* book */
+    | 'video' /* video */
+    | 'podcast' /* podcast */
+    | 'paper' /* academic paper, scholarly articles, formal piece of writing about an academic subject. */
   metaData: PostMetaData | BookMetaData
 }
 
