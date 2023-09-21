@@ -53,17 +53,22 @@ export async function extract(url: string) {
 // e.g. add ld+json to webpage.content for douban.com
 function applyRules(url: string, dom: JSDOM): string {
   const rules = [
-    {urlPattern: '.*\.douban\.com', querySelector: '.subject'}
+    {urlPattern: '.*\.douban\.com', querySelector: '.subject'},
+    {urlPattern: 'arxiv.org\/abs\/.*', about: 'About arxiv.org: arXiv is a curated research-sharing platform open to anyone. This is a webpage about a paper.\nType: paper'}
   ];
 
+  // TODO match multiple rules
   for (const rule of rules) {
     if (!new RegExp(rule.urlPattern).test(url)) continue
 
+    if (rule.about) return rule.about
+
+    if(!rule.querySelector) return ''
     const elements = dom.window.document.querySelectorAll(rule.querySelector)
     if (elements.length) {
       return Array.from(elements).reduce((acc, el) => {
         return acc + el.textContent + '\n';
-      }, '').replaceAll(/[\n\s]+/g, '\n')
+      }, rule.about ?? '').replaceAll(/[\n\s]+/g, '\n')
     }
   }
 
