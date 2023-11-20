@@ -109,7 +109,7 @@ function createAxiosLanguageModel(url: string, config: object, defaultParams: Re
                 return success(result.data.choices[0].message?.content ?? "");
             }
             if (!isTransientHttpError(result.status) || retryCount >= retryMaxAttempts) {
-                return error(`REST API error ${result.status}: ${result.statusText}`);
+                return error(`REST API error ${result.status}: ${result.statusText}. Check if LLM is avaliable.`);
             }
             await sleep(retryPauseMs);
             retryCount++;

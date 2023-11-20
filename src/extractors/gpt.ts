@@ -2,17 +2,17 @@ import fs from "fs"
 import path from "path"
 import dotenv from "dotenv"
 import { createLanguageModel, createJsonTranslator } from "../typechat"
-import type { Entry, PostMetaData } from '../types/index'
+import type { Entity, PostMetaData } from '../types/entity'
 import { type Readability } from '@mozilla/readability'
 
 dotenv.config();
 
-export default async function gpt(url: string, webpage: ReturnType<Readability['parse']>): Promise<Entry|null> {
+export default async function gpt(url: string, webpage: ReturnType<Readability['parse']>): Promise<Entity|null> {
   if(!webpage) return null
 
   const model = createLanguageModel(process.env)
-  const schema = fs.readFileSync(path.join(__dirname, "../types/index.d.ts"), "utf8")
-  const translator = createJsonTranslator<Entry>(model, schema, "Entry")
+  const schema = fs.readFileSync(path.join(__dirname, "../types/entity.d.ts"), "utf8")
+  const translator = createJsonTranslator<Entity>(model, schema, "Entity")
 
   // const shortContent = `${url}
   // title: ${webpage.title}
