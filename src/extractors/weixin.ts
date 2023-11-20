@@ -38,7 +38,7 @@ export default async function weixin(url: string, content: string): Promise<Enti
   const description = matchProperty('og:description', content)
 
   return {
-    version: "20231115",
+    version: "20231121",
     parser: "elephant",
     title,
     covers: [{
