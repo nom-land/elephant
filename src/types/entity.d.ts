@@ -10,7 +10,7 @@ export interface BaseEntity {
   /**
    * The version of this entity.
    */
-  version: "20231115";
+  version: "20231121";
 
   parser: "elephant";
 }
@@ -49,11 +49,11 @@ export interface Entity extends BaseEntity {
    *  - `movie` : a movie
    *  - `game` : a game
    */
-  type?: "post" | "book" | "video" | "podcast" | "paper" | "song" | "movie" | "game";
+  type?: "post" | "book" | "video" | "podcast" | "podcast episode" | "paper" | "song" | "movie" | "game";
   /**
    * The metadata of this entity.
    */
-  metaData?: PostMetaData | BookMetaData;
+  metaData?: PostMetaData | BookMetaData | PodcastEpisodeMetaData;
 }
 
 interface DigitalContent<Derivation extends "translation" | "original"> {
@@ -125,6 +125,17 @@ export interface PostMetaData extends DigitalContent<"translation" | "original">
    * The keywords of this post.
    */
   keywords?: string[];
+}
+
+export interface PodcastEpisodeMetaData extends DigitalContent<"translation" | "original"> {
+  /*
+   * The host of the podcast episode.
+   */
+  host?: string;
+  /**
+   * The guests of this podcast episode.
+   */
+  guests?: string[];
 }
 
 interface Media {
