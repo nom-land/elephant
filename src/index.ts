@@ -54,7 +54,8 @@ export async function extract(url: string) {
 function applyRules(url: string, dom: JSDOM): string {
   const rules = [
     {urlPattern: '.*\.douban\.com', querySelector: '.subject'},
-    {urlPattern: 'arxiv.org\/abs\/.*', about: 'About arxiv.org: arXiv is a curated research-sharing platform open to anyone. This is a webpage about a paper.\nType: paper'}
+    {urlPattern: 'arxiv.org\/abs\/.*', about: 'About arxiv.org: arXiv is a curated research-sharing platform open to anyone. This is a webpage about a paper.\nType: paper'},
+    {urlPattern: 'matters.town/.*', querySelector: '[data-test-id="article/license"]'}
   ];
 
   // TODO match multiple rules

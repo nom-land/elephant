@@ -84,7 +84,7 @@ interface DigitalContent<Derivation extends "translation" | "original"> {
    */
   lastModified?: string;
   /**
-   * The copyright of the content.
+   * The copyright statement or open source license of the content(like CC0 / CC BY-NC-ND / MIT license / Apache).
    */
   copyright?: string;
   /**

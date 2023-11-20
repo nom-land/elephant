@@ -1,4 +1,4 @@
-import { type PostMetaData } from '../types/index'
+import { type Entity } from '../types/entity'
 import { languageDectect } from '../utils/languageDetect'
 import { matchMetaName, match, matchProperty } from '../utils/match'
 
@@ -30,17 +30,29 @@ function extractLastModified(content: string) {
   return ''
 }
 
-export default async function weixin(url: string, content: string): Promise<PostMetaData> {
+export default async function weixin(url: string, content: string): Promise<Entity> {
   const title = matchProperty('og:title', content)
   const language = await languageDectect(title)
   const lastModified = extractLastModified(content)
+  const cover = matchProperty('og:image', content)
+  const description = matchProperty('og:description', content)
 
   return {
+    version: "20231115",
+    parser: "elephant",
     title,
-    authors: extractAuthor(content),
+    covers: [{
+      address: cover
+    }],
+    description,
     type: 'post',
-    language,
+    metaData: {
+      type: 'post',
+      platform: 'mp.weixin',
+      authors: extractAuthor(content),
+      language,
+      lastModified
+    },
     url,
-    lastModified
   }
 }
