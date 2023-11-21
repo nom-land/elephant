@@ -1,9 +1,9 @@
 # Elephant
-Extract metadata from webpage.
+Extract structured data from web pages using the OpenAI API.
 
 ## Install
 ```bash
-npm install elephant-sdk
+npm install @nomland/elephant
 ```
 
 ## Configure environment variables
@@ -20,9 +20,9 @@ Run examples:
 npm run start
 ```
 
-or use elephant-sdk in project  
+or use elephant in project  
 ```
-import {extract} from elephant-sdk
+import {extract} from @nomland/elephant
 
 await extract('https://test.com/example-page')
 ```
