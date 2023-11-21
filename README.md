@@ -26,3 +26,7 @@ import {extract} from elephant-sdk
 
 await extract('https://test.com/example-page')
 ```
+
+## TODO
+Move examples to ./examples
+Extract IPFS url if existed
