@@ -1,12 +1,16 @@
 {
   "name": "@nomland/elephant",
-  "version": "0.2.3",
+  "version": "0.2.4",
   "description": "",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "/dist"
   ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nom-land/elephant"
+  },
   "scripts": {
     "start": "ts-node examples.ts",
     "test": "pnpm run build && jest",
