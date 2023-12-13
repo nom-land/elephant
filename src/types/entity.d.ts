@@ -49,11 +49,11 @@ export interface Entity extends BaseEntity {
    *  - `movie` : a movie
    *  - `game` : a game
    */
-  type?: "post" | "book" | "video" | "podcast" | "podcast episode" | "paper" | "song" | "movie" | "game";
+  type?: "post" | "book" | "video" | "podcast" | "paper" | "song" | "movie" | "game";
   /**
    * The metadata of this entity.
    */
-  metaData?: PostMetaData | BookMetaData | PodcastEpisodeMetaData;
+  metaData?: PostMetaData | BookMetaData | PodcastMetaData;
 }
 
 interface DigitalContent<Derivation extends "translation" | "original"> {
@@ -127,7 +127,7 @@ export interface PostMetaData extends DigitalContent<"translation" | "original">
   keywords?: string[];
 }
 
-export interface PodcastEpisodeMetaData extends DigitalContent<"translation" | "original"> {
+export interface PodcastMetaData extends DigitalContent<"translation" | "original"> {
   /*
    * The host of the podcast episode.
    */

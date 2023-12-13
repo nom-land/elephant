@@ -47,6 +47,7 @@ export async function extract(url: string) {
 
   const additionalContent = applyRules(url, dom)
   webpage.content += additionalContent
+  console.log(webpage)
 
   return await gpt(url, webpage)
 }
@@ -55,9 +56,10 @@ export async function extract(url: string) {
 // e.g. add ld+json to webpage.content for douban.com
 function applyRules(url: string, dom: JSDOM): string {
   const rules = [
-    {urlPattern: '.*\.douban\.com', querySelector: '.subject'},
-    {urlPattern: 'arxiv.org\/abs\/.*', about: 'About arxiv.org: arXiv is a curated research-sharing platform open to anyone. This is a webpage about a paper.\nType: paper'},
-    {urlPattern: 'matters.town/.*', querySelector: '[data-test-id="article/license"]'}
+    { urlPattern: '.*\.douban\.com', querySelector: '.subject' },
+    { urlPattern: 'arxiv.org\/abs\/.*', about: 'About arxiv.org: arXiv is a curated research-sharing platform open to anyone. This is a webpage about a paper.\nType: paper' },
+    { urlPattern: 'matters.town/.*', querySelector: '[data-test-id="article/license"]' },
+    { urlPattern: '.*\.xiaoyuzhoufm.com\/.*', about: 'About xiaoyuzhoufm.com: xiaoyuzhou(小宇宙) 是一个播客应用.\nType: podcast' },
   ];
 
   // TODO match multiple rules
@@ -66,7 +68,7 @@ function applyRules(url: string, dom: JSDOM): string {
 
     if (rule.about) return rule.about
 
-    if(!rule.querySelector) return ''
+    if (!rule.querySelector) return ''
     const elements = dom.window.document.querySelectorAll(rule.querySelector)
     if (elements.length) {
       return Array.from(elements).reduce((acc, el) => {
