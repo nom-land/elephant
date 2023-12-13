@@ -8,7 +8,7 @@ import { JSDOM } from 'jsdom'
 import weixin from './extractors/weixin'
 import gpt from './extractors/gpt'
 
-export * from './types/entity'
+export type * from './types/entity'
 
 export async function fetch(url: string, fetchOptions: RetrieveOptions = {}) {
   if (!isString(url)) {
