@@ -40,16 +40,16 @@ export interface Entity extends BaseEntity {
   links?: string[];
   /**
    * The type of this entity.
-   *  - `post` (default type) : Any content like a blog post, a tweet post, an article...
-   *  - `podcast` : podcast
+   *  - `post` (default type) : Any content like a blog post, a tweet post, an article... The metaData type should be PostMetaData.
+   *  - `book` : book. The metaData type should be BookMetaData.
+   *  - `podcast` : podcast. The metaData type should be PodcastMetaData.
    *  - `song` : a song
    *  - `video` : video
    *  - `paper` : academic paper, scholarly articles, formal piece of writing about an academic subject.
-   *  - `book` : book
    *  - `movie` : a movie
    *  - `game` : a game
    */
-  type?: "post" | "book" | "video" | "podcast" | "paper" | "song" | "movie" | "game";
+  type?: "post" | "book" | "podcast" | "video" | "paper" | "song" | "movie" | "game";
   /**
    * The metadata of this entity.
    */
