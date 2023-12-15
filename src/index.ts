@@ -1,4 +1,4 @@
-import { isValidUrl } from './utils/url'
+import { isValidUrl, purify } from './utils/url'
 import { isString } from './utils/function'
 import retrieve, { type RetrieveOptions } from './utils/retrieve'
 
@@ -22,7 +22,9 @@ export async function fetch(url: string, fetchOptions: RetrieveOptions = {}) {
   return await retrieve(url, fetchOptions)
 }
 
-export async function extract(url: string) {
+export async function extract(u: string) {
+  const url = purify(u) || u
+
   const html = await fetch(url)
   if (!html) {
     return null
