@@ -53,7 +53,7 @@ export interface Entity extends BaseEntity {
   /**
    * The metadata of this entity.
    */
-  metaData?: PostMetaData | BookMetaData | PodcastMetaData;
+  metaData?: PostMetaData | BookMetaData | PodcastMetaData | DefaultMetaData;
 }
 
 interface DigitalContent<Derivation extends "translation" | "original"> {
@@ -104,6 +104,8 @@ interface DigitalContent<Derivation extends "translation" | "original"> {
    */
   originalLanguage?: Derivation extends "translation" ? string : never;
 }
+
+export interface DefaultMetaData extends DigitalContent<"translation" | "original"> {}
 
 export interface BookMetaData extends DigitalContent<"translation" | "original"> {
   /**

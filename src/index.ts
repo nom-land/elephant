@@ -27,6 +27,7 @@ export async function extract(u: string) {
 
   const html = await fetch(url)
   if (!html) {
+    console.error('Failed to fetch html')
     return null
   }
 
@@ -45,13 +46,18 @@ export async function extract(u: string) {
   let metaString = Array.from(metaTags).reduce((acc, metaTag) => {
     return acc + metaTag.outerHTML + '\n';
   }, '')
-  webpage.content = metaString + webpage.content
+  webpage.content = metaString + purifyContent(webpage.content)
 
   const additionalContent = applyRules(url, dom)
   webpage.content += additionalContent
   console.log(webpage)
 
   return await gpt(url, webpage)
+}
+
+function purifyContent(content: string) {
+  // remove non-text content like svg/img/iframe/canvas
+  return content.replaceAll(/<svg.*?>.*?<\/svg>|<img.*?>|<iframe.*?>.*?<\/iframe>|<canvas.*?>.*?<\/canvas>/g, '')
 }
 
 // apply domain/url pattern specific rules defined in rules.ts

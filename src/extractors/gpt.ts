@@ -23,7 +23,7 @@ webpage title: ${webpage.title}
 lang: ${webpage.lang}
 website name: ${webpage.siteName}
 
-${webpage.content}`
+${webpage.content.slice(0, 1000)}`
 
   // TODO add guidelines to prompt
   const response = await translator.translate(content)
