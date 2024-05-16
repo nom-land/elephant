@@ -50,7 +50,7 @@ export async function extract(u: string) {
 
   const additionalContent = applyRules(url, dom)
   webpage.content += additionalContent
-  console.log(webpage)
+  // console.log(webpage)
 
   return await gpt(url, webpage)
 }
